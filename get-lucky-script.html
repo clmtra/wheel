@@ -25,6 +25,7 @@
     sessionStorage.setItem("tt_sessionId", "2222")
     let sessionId = sessionStorage.getItem("tt_sessionId");
     let Url = "https://luckeel.herokuapp.com/wheel/" + sessionId;
+    let amount;
 
     $(document).ready(function () {
         $.ajax(
@@ -32,11 +33,17 @@
                 type:'GET',
                 url: Url,
                 success: function(data){
-                    $('.result').html(data)
-                    // alert('successful');
+                    amount = data;
                 }
             }
         );
+
+        // condition on differences
+        if (amount >= 5000){
+            $('.result').html("GO TO WHEEL! " + amount)
+        } else {
+            $('.result').html("GO TO FINISH " + amount)
+        }
     });
 
 

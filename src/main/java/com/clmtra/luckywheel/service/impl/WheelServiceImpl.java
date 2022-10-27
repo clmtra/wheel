@@ -25,7 +25,9 @@ public class WheelServiceImpl implements WheelService {
 
     @Override
     public String getCurrentAmountForWheel(String id) {
+        String amount = wheelStorage.remove(id);
+        System.out.println("Result: " + amount);
 
-        return wheelStorage.remove(id);
+        return amount;
     }
 }
