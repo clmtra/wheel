@@ -1,0 +1,502 @@
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<section class="fortune">
+    <div class="fortune__wrapper">
+        <header class="fortune__header">
+            <h1 class="fortune__header-title">
+                MINIMO HALLOWEEN PARTY
+            </h1>
+            <p class="fortune__header-text">КРУТИ МАГИЧЕСКОЕ КОЛЕСО ФОРТУНЫ И ПОЛУЧАЙ ПОДАРКИ!</p>
+        </header>
+        <div class="fortune-wheel">
+            <img class="fortune-wheel__wheel js-wheel" src="https://thumb.tildacdn.com/tild6135-3737-4864-b536-643664616433/-/resize/741x/-/format/webp/koleso_1.png" />
+            <img class="fortune-wheel__arrow" src="https://thumb.tildacdn.com/tild3332-3935-4236-a361-356563366431/-/resize/741x/-/format/webp/strelka_1.png" />
+            <img class="fortune-wheel__bg" src="https://thumb.tildacdn.com/tild6130-6532-4230-b866-656439613230/-/resize/741x/-/format/webp/__1.png" />
+        </div>
+
+        <div class="fortune__footer js-footer">
+            <a class="fortune__footer-btn js-start-btn">Крутить колесо</a>
+            <span class="fortune__footer-label js-allowed-spins"></span>
+        </div>
+
+        <div class="fortune-form js-form">
+            <p class="fortune-form__heading">Оставьте вашу почту, чтобы получить этот подарок</p>
+            <form class="fortune-form__form">
+                <input type="email" class="fortune-form__form-input" placeholder="Ваша почта" required>
+                <button type="submit" class="fortune-form__form-btn">Отправить</button>
+            </form>
+        </div>
+        <div class="fortune__success-box js-form-success-div">
+            Спасибо, форма была успешно отправлена
+        </div>
+
+        <div class="fortune-popup js-popup">
+            Поздравляем! Ваш приз - "Водолазка"
+        </div>
+    </div>
+</section>
+<style>
+    :root {
+        --primary-color: #BB3EBB;
+        --dark-color: #000;
+        --white-color: #ffffff;
+    }
+
+    .fortune {
+        padding: 70px 0;
+        font-family: 'Montserrat', Arial, sans-serif;
+        overflow: hidden;
+        z-index: 999;
+        background: #ebde44 no-repeat center;
+        background-size: cover;
+    }
+
+    @media (max-width: 768px) {
+        .fortune {
+            padding: 0;
+        }
+    }
+
+    .fortune * {
+        box-sizing: border-box;
+    }
+
+    .fortune__header {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    @media (max-width: 640px) {
+        .fortune__header {
+            max-width: 90%;
+        }
+    }
+
+    .fortune__header-title {
+        position: relative;
+        margin-bottom: 15px;
+        font-size: 60px;
+        font-weight: 700;
+        color: #ff66cc;
+    }
+
+    @media (max-width: 640px) {
+        .fortune__header-title {
+            font-size: 32px;
+        }
+    }
+
+    .fortune__header-subtitle {
+        margin-bottom: 10px;
+        font-size: 70px;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    @media (max-width: 640px) {
+        .fortune__header-subtitle {
+            font-size: 50px;
+        }
+    }
+
+    .fortune__header-text {
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    .fortune__wrapper {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        min-height: 100vh;
+        z-index: 10;
+    }
+
+    /*@media (max-width: 640px) {*/
+    /*  .fortune__wrapper {*/
+    /*    -webkit-box-pack: flex-start;*/
+    /*    -ms-flex-pack: flex-start;*/
+    /*    justify-content: flex-start;*/
+    /*  }*/
+    /*}*/
+
+    .fortune-wheel {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        height: 500px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 640px) {
+        .fortune-wheel {
+            max-width: 320px;
+            height: 320px;
+        }
+    }
+
+    .fortune-wheel__wheel,
+    .fortune-wheel__arrow,
+    .fortune-wheel__bg {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .fortune-wheel__arrow {
+        z-index: 3;
+    }
+
+    .fortune-wheel__wheel {
+        z-index: 2;
+    }
+
+    .fortune-wheel__bg {
+        z-index: 0;
+    }
+
+    .fortune__footer {
+        margin-top: 40px;
+    }
+
+    .fortune__footer-btn {
+        display: inline-block;
+        padding: 15px 40px;
+        font-family: 'FuturaPT', Arial, sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        border-radius: 5px;
+        color: #fff !important;
+        background: #ff66cc;
+        -webkit-transition: .4s ease;
+        -o-transition: .4s ease;
+        transition: .4s ease;
+        cursor: pointer;
+    }
+
+    .fortune__footer-btn:hover {
+        background: #000;
+        color: #fff !important;;
+    }
+
+    .fortune__footer-btn.disabled {
+        opacity: .6;
+        pointer-events: none;
+    }
+
+    .fortune__footer-label {
+        display: block;
+        margin-top: 5px;
+        font-size: 14px;
+        text-align: center;
+        color: #fff;
+    }
+
+    .fortune-popup {
+        position: fixed;
+        top: -50%;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: 400;
+        border: 1px solid #ff5555;
+        border-radius: 5px;
+        color: var(--dark-color);
+        background: var(--white-color);
+        -webkit-transition: .6s ease;
+        -o-transition: .6s ease;
+        transition: .6s ease;
+        z-index: 999;
+    }
+
+    .fortune-popup.show {
+        top: 50px;
+    }
+
+    @media (max-width: 640px) {
+        .fortune-popup {
+            font-size: 14px;
+        }
+    }
+
+    .fortune-form {
+        display: none;
+        margin-top: 30px;
+    }
+
+    .fortune-form__heading {
+        max-width: 450px;
+        margin: 0 auto 15px;
+        font-size: 20px;
+        font-weight: 400;
+        color: #fff;
+        text-align: center;
+    }
+
+    .fortune-form__form {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .fortune-form__form-input {
+        padding: 10px 15px;
+        font-weight: 400;
+        border: 1px solid var(--dark-color);
+        border-radius: 5px;
+        outline: none;
+    }
+
+    .fortune-form__form-btn {
+        margin-top: 10px;
+        padding: 15px 40px;
+        font-family: 'FuturaPT', Arial, sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        border-radius: 5px;
+        color: #fff !important;
+        background: #ff5555;
+        -webkit-transition: .4s ease;
+        -o-transition: .4s ease;
+        transition: .4s ease;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .fortune-form__form-btn:hover {
+        background: #000;
+        color: #fff;
+    }
+
+    .fortune__success-box {
+        display: none;
+        margin-top: 20px;
+        padding: 15px 25px;
+        font-size: 16px;
+        font-weight: 400;
+        color: var(--white-color);
+        background: var(--primary-color);
+    }
+
+    #rec372313369 {
+        display: none;
+    }
+
+</style>
+
+<script>
+    sessionStorage.setItem("tt_sessionId", "123");
+
+    let sessionId = sessionStorage.getItem("tt_sessionId");
+    let Url = "https://luckeel.herokuapp.com/wheel/" + sessionId;
+    let amount;
+    $(document).ready(function() {
+
+        amount = $.ajax(
+            {
+                type:'GET',
+                url: Url,
+                success: function(orderAmount){
+                    return  orderAmount;
+                    // if (orderAmount >= 5000) {
+                    //     $('.result').html("GO TO WHEEL!") // needs to be reassigned to html tilda attributes by scenario
+                    // } else {
+                    //     $('.result').html("GO TO FINISH") // needs to be reassigned to html tilda attributes by scenario
+                    // }
+                }
+            }
+        );
+
+        console.log(amount);
+
+        setTimeout(() => {
+            const fortuneWheel = $('.js-wheel');
+            const startButton = $('.js-start-btn');
+            const blockFooter = $('.js-footer');
+            const blockForm = $('.js-form');
+            const successBox = $('.js-form-success-div');
+            const tildaFormId = '372313369';
+            const zoneValues = {
+                0: 'Маска для лица',
+                1: 'Lovely Box',
+                2: 'Unicorn Bubbles',
+                3: 'Best Friends Socks',
+                4: 'Magic Box',
+                5: 'Lovely Box',
+                6: 'Best Friends Socks',
+                7: 'Водолазка'
+            };
+
+
+            let deg = 0;
+            let zoneSize = 45;
+            let winningValue;
+            let spinAmount = 0;
+            let prizes = [];
+            let allowedSpinAmount;
+
+            if (amount >= 5000 && amount < 10000) {
+                allowedSpinAmount = 1;
+            } else if (amount >= 10000) {
+                allowedSpinAmount = 2;
+            }
+
+            console.log(allowedSpinAmount)
+
+            // Main logic
+            const getWinningValue = (actualDeg) => {
+                const winningNumber = Math.floor(actualDeg / zoneSize);
+                winningValue = zoneValues[winningNumber];
+                prizes.push(winningValue);
+                showSuccessPopup(winningValue);
+            };
+
+            const rotateWheel = function() {
+                deg = Math.floor(3000 + Math.random() * 3000);
+                fortuneWheel.css('transition', 'all 5s ease-out');
+                fortuneWheel.css('transform', `rotate(${deg}deg)`);
+                spinAmount++;
+            };
+
+            const endRotation = function(actualDeg) {
+                fortuneWheel.css('transition', 'none');
+                fortuneWheel.css('transform', `rotate(${actualDeg}deg)`);
+            };
+
+            const showConfetti = () => {
+                let colors = ["#BB3EBB", "#C562C1"];
+
+                confetti({
+                    particleCount: 100,
+                    angle: 60,
+                    spread: 55,
+                    origin: {
+                        x: 0,
+                        y: 0.8
+                    },
+                    colors: colors,
+                });
+                confetti({
+                    particleCount: 100,
+                    angle: 120,
+                    spread: 55,
+                    origin: {
+                        x: 1,
+                        y: 0.8
+                    },
+                    colors: colors,
+                });
+            };
+
+            const toggleForm = () => {
+                blockForm.show();
+                blockFooter.hide();
+            };
+
+            const showSuccessPopup = (value) => {
+                let popup = $('.js-popup');
+                popup.addClass('show');
+                popup.text(`Поздравляем! Ваш приз - "${value}"`);
+            };
+
+            const hideSuccessPopup = () => {
+                let popup = $('.js-popup');
+                popup.removeClass('show');
+            };
+
+            const checkLeftSpins = function() {
+                let spinsInfo = $('.js-allowed-spins');
+                spinsInfo.text(`Осталось прокруток: ${allowedSpinAmount - spinAmount}`);
+
+                if (allowedSpinAmount - spinAmount == 0) {
+                    startButton.addClass('disabled');
+                }
+            };
+
+            const sendToTilda = function() {
+                let giftsInput = $(`#form${tildaFormId} [name="Подарок"]`);
+                giftsInput.val(prizes.join(', '));
+                $(`#form${tildaFormId} .t-submit`).click();
+            };
+
+
+            startButton.on('click', () => {
+                if (spinAmount < allowedSpinAmount) {
+                    startButton.addClass('disabled');
+                    rotateWheel();
+                }
+            });
+
+            fortuneWheel.on('transitionend', () => {
+                startButton.removeClass('disabled');
+                const actualDeg = deg % 360;
+                endRotation(actualDeg);
+                getWinningValue(actualDeg);
+                showConfetti();
+                checkLeftSpins();
+                setTimeout(() => {
+                    hideSuccessPopup();
+                }, 3000);
+
+                if (spinAmount == allowedSpinAmount) {
+                    toggleForm();
+                }
+            });
+
+            $('.fortune-form__form').on('submit', function(e) {
+                e.preventDefault();
+                sendToTilda();
+                blockForm.remove();
+                successBox.show();
+            });
+
+            $('.fortune-form__form-input').on('input', function() {
+                $(`#form${tildaFormId} [name="Email"]`).val($(this).val());
+            });
+
+            checkLeftSpins();
+
+            if (amount == undefined || amount < 5000) {
+                // Remove fortune
+                $('.fortune__header-title').html("YAFFA YAFFA YAFFA");
+            }
+
+            // if (amount == undefined || amount < 5000) {
+            //     // Remove fortune
+            //     $('#rec372313369').remove();
+            //     $('#rec372313334').remove();
+            // } else {
+            //     // Remove default block
+            //     $('#rec253112433').remove();
+            // }
+
+            // localStorage.removeItem('amount');
+        });
+    });
+
+</script>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wheel Request</title>
+    <!--  tag script with ajax inside should be present into tilda html page in head section  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<span class="t706__cartwin-totalamount">
+    <div class="t706__cartwin-prodamount-price">9 990</div>
+    <div class="t706__cartwin-prodamount-currency"> ₽</div>
+</span>
+<div class="t-form__submit">
+    <button type="submit" class="t-submit" style="color:#fff4f0;border:1px solid #fff4f0;background-color:#7e5bba;">Оформить заказ</button>
+</div>
+<!-- replace this script as is, without changes. it should be work with actual tilda classes-->
+<script>
+    sessionStorage.setItem("tt_sessionId", "123");
+    $(document).ready(function () {
+        $('.t-form__submit .t-submit').click(function (event) {
+            const Url = "https://luckeel.herokuapp.com/wheel";
+            let sessionId = sessionStorage.getItem("tt_sessionId")
+            let amount = $('.t706__cartwin-totalamount .t706__cartwin-prodamount-price').text()
+            let formData = JSON.stringify({"session_id": sessionId, "amount": amount})
+
+            $.ajax({
+                type: "POST",
+                url: Url,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                data: formData
+            }).done(function (data) {
+                console.log(data);
+            })
+
+            event.preventDefault();
+        });
+    })
+</script>
+<!-- end of main logic -->
+</body>
+</html>

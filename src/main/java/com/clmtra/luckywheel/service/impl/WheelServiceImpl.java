@@ -13,11 +13,6 @@ public class WheelServiceImpl implements WheelService {
 
     private final static Map<String, String> wheelStorage = new ConcurrentHashMap<>();
 
-    @PostConstruct
-    public void initStorage() {
-        wheelStorage.put("0", "Hello");
-    }
-
     @Override
     public void addWheelToStorage(OrderDTO orderDTO) {
         wheelStorage.put(orderDTO.getSessionId(), orderDTO.getAmount());
@@ -26,6 +21,10 @@ public class WheelServiceImpl implements WheelService {
     @Override
     public String getCurrentAmountForWheel(String id) {
         String amount = wheelStorage.remove(id);
+        if (amount == null) {
+            amount = "0";
+        }
+
         System.out.println("Result: " + amount);
 
         return amount;
