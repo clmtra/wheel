@@ -19,13 +19,13 @@ public class WheelServiceImpl implements WheelService {
 
     @Override
     public OrderDTO getCurrentAmountForWheel(String id) {
-        var orderCustomer = wheelStorage.remove(id);
+        String orderCustomer = wheelStorage.remove(id);
 
         if (orderCustomer == null) {
             return null;
         }
 
-        var orderDTO = new OrderDTO();
+        OrderDTO orderDTO = new OrderDTO();
         orderDTO.setSessionId(id);
         orderDTO.setAmount(orderCustomer);
 

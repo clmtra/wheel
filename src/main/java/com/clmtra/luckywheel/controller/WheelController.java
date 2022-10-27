@@ -16,7 +16,7 @@ public class WheelController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void addTemporaryData(@RequestBody OrderDTO orderDTO) {
-        var formattedAmount = orderDTO.getAmount().replace(" ", "");
+        String formattedAmount = orderDTO.getAmount().replace(" ", "");
         orderDTO.setAmount(formattedAmount);
         System.out.println(orderDTO.toString());
         wheelService.addWheelToStorage(orderDTO);
