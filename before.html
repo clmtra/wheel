@@ -8,7 +8,7 @@
 </head>
 <body>
 <span class="t706__cartwin-totalamount">
-    <div class="t706__cartwin-prodamount-price">9 990</div>
+    <div class="t706__cartwin-prodamount-price">232</div>
     <div class="t706__cartwin-prodamount-currency"> ₽</div>
 </span>
 <div class="t-form__submit">
@@ -16,26 +16,24 @@
 </div>
 <!-- replace this script as is, without changes. it should be work with actual tilda classes-->
 <script>
-    sessionStorage.setItem("tt_sessionId", "123");
     $(document).ready(function () {
         $('.t-form__submit .t-submit').click(function (event) {
             const Url = "https://luckeel.herokuapp.com/wheel";
             let sessionId = sessionStorage.getItem("tt_sessionId")
-            let amount = $('.t706__cartwin-totalamount .t706__cartwin-prodamount-price').text()
+            let amount = $('.t706__cartwin-totalamount-info_value .t706__cartwin-prodamount-price').text()
             let formData = JSON.stringify({"session_id": sessionId, "amount": amount})
 
             $.ajax({
+                // async: false,
                 type: "POST",
                 url: Url,
                 headers: {
                     "Content-Type": "application/json"
                 },
                 data: formData
-            }).done(function (data) {
-                console.log(data);
             })
 
-            event.preventDefault();
+           event.preventDefault();
         });
     })
 </script>

@@ -1,29 +1,19 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <section class="fortune">
     <div class="fortune__wrapper">
         <header class="fortune__header">
             <h1 class="fortune__header-title">
-                MINIMO HALLOWEEN PARTY
+                MINIMO BIRTHDAY PARTY
             </h1>
-            <p class="fortune__header-text">КРУТИ МАГИЧЕСКОЕ КОЛЕСО ФОРТУНЫ И ПОЛУЧАЙ ПОДАРКИ!</p>
+            <p class="fortune__header-text">КРУТИ КОЛЕСО ФОРТУНЫ И ПОЛУЧАЙ ПОДАРКИ!</p>
         </header>
         <div class="fortune-wheel">
-            <img class="fortune-wheel__wheel js-wheel"
-                 src="https://thumb.tildacdn.com/tild6135-3737-4864-b536-643664616433/-/resize/741x/-/format/webp/koleso_1.png"/>
-            <img class="fortune-wheel__arrow"
-                 src="https://thumb.tildacdn.com/tild3332-3935-4236-a361-356563366431/-/resize/741x/-/format/webp/strelka_1.png"/>
-            <img class="fortune-wheel__bg"
-                 src="https://thumb.tildacdn.com/tild6130-6532-4230-b866-656439613230/-/resize/741x/-/format/webp/__1.png"/>
-            <img class="ghost"
-                 src="https://thumb.tildacdn.com/tild6630-6631-4432-a131-616532313034/-/format/webp/fantasma.png"/>
+            <img class="fortune-wheel__wheel js-wheel" src="https://thumb.tildacdn.com/tild6132-3033-4962-b138-343064386666/-/format/webp/___-01.png" />
+            <img class="fortune-wheel__arrow" src="https://thumb.tildacdn.com/tild3264-3236-4562-b934-663534666132/-/format/webp/_3-01-01.png" />
+            <img class="fortune-wheel__bg" src="https://thumb.tildacdn.com/tild3462-3366-4064-b838-356161666139/-/format/webp/__2-01.png" />
         </div>
 
-        <div>
-
-
-        </div>
         <div class="fortune__footer js-footer">
             <a class="fortune__footer-btn js-start-btn">Крутить колесо</a>
             <span class="fortune__footer-label js-allowed-spins"></span>
@@ -57,8 +47,7 @@
         font-family: 'Montserrat', Arial, sans-serif;
         overflow: hidden;
         z-index: 999;
-        /*background: #ebde44 no-repeat center;*/
-        background: url(https://thumb.tildacdn.com/tild3236-3764-4631-b133-386435383966/-/format/webp/fon.png);
+        background: #f6d6e6 no-repeat center;
         background-size: cover;
     }
 
@@ -66,18 +55,6 @@
         .fortune {
             padding: 0;
         }
-        .ghost {
-            padding: 0;
-        }
-    }
-
-    .ghost{
-        position: relative;
-        display: block;
-        width: 50%;
-        height: 50%;
-        top: 0;
-        left: 440;
     }
 
     .fortune * {
@@ -100,7 +77,7 @@
         margin-bottom: 15px;
         font-size: 60px;
         font-weight: 700;
-        color: #ff66cc;
+        color: #ee85b4;
     }
 
     @media (max-width: 640px) {
@@ -125,7 +102,7 @@
     .fortune__header-text {
         font-size: 18px;
         font-weight: 600;
-        color: #fff;
+        color: rgb(159, 135, 191);
     }
 
     .fortune__wrapper {
@@ -204,8 +181,8 @@
         font-size: 18px;
         font-weight: 400;
         border-radius: 5px;
-        color: #fff !important;
-        background: #ff66cc;
+        color: #ffffff !important;
+        background: #ee85b4;
         -webkit-transition: .4s ease;
         -o-transition: .4s ease;
         transition: .4s ease;
@@ -214,7 +191,7 @@
 
     .fortune__footer-btn:hover {
         background: #000;
-        color: #fff !important;;
+        color: #fff !important;
     }
 
     .fortune__footer-btn.disabled {
@@ -227,7 +204,7 @@
         margin-top: 5px;
         font-size: 14px;
         text-align: center;
-        color: #fff;
+        color: #9f87bf;
     }
 
     .fortune-popup {
@@ -325,70 +302,39 @@
         background: var(--primary-color);
     }
 
-    #rec372313369 {
+    #rec466866539 {
         display: none;
     }
 
 </style>
 
 <script>
-    $(document).ready(function () {
-        let sessionId = sessionStorage.getItem("tt_sessionId");
-        let Url = "https://luckeel.herokuapp.com/wheel/" + sessionId;
-
+    $(document).ready(function() {
         setTimeout(() => {
             const fortuneWheel = $('.js-wheel');
             const startButton = $('.js-start-btn');
             const blockFooter = $('.js-footer');
             const blockForm = $('.js-form');
             const successBox = $('.js-form-success-div');
-            const tildaFormId = '506853731'; //372313369
+            const tildaFormId = '466866539';
             const zoneValues = {
-                0: 'Шапочка',
-                1: 'Футболка',
-                2: 'Свитер',
-                3: 'Леггинсы',
-                4: 'Шапочка',
-                5: 'Кроп-топ',
-                6: 'Свитер',
-                7: 'ДЖЕКПОТ'
+                0: 'Футболка',
+                1: 'Фирменный топ',
+                2: 'Шорты-боксеры',
+                3: 'Фирменный топ',
+                4: 'Бейсболка',
+                5: 'Jack pot',
+                6: 'Фирменное бельё',
+                7: 'Бейсболка'
             };
+
 
             let deg = 0;
             let zoneSize = 45;
             let winningValue;
             let spinAmount = 0;
+            let allowedSpinAmount = 1;
             let prizes = [];
-            let allowedSpinAmount;
-            let isPresentWheel;
-
-            var amount = function () {
-                var tmp = null;
-                $.ajax(
-                    {
-                        async: false,
-                        type: 'GET',
-                        url: Url,
-                        success: function (orderAmount) {
-                            console.log("Order amount response: " + orderAmount)
-                            tmp = orderAmount;
-                        }
-                    }
-                );
-                return tmp;
-            }();
-
-            if (amount >= 1 && amount < 10000) {
-                allowedSpinAmount = 1;
-                isPresentWheel = true;
-            } else if (amount >= 10000) {
-                allowedSpinAmount = 2;
-                isPresentWheel = true;
-            } else if (amount === undefined || amount < 5000) {
-                isPresentWheel = false;
-            }
-
-            console.log(allowedSpinAmount)
 
             // Main logic
             const getWinningValue = (actualDeg) => {
@@ -398,14 +344,14 @@
                 showSuccessPopup(winningValue);
             };
 
-            const rotateWheel = function () {
+            const rotateWheel = function() {
                 deg = Math.floor(3000 + Math.random() * 3000);
                 fortuneWheel.css('transition', 'all 5s ease-out');
                 fortuneWheel.css('transform', `rotate(${deg}deg)`);
                 spinAmount++;
             };
 
-            const endRotation = function (actualDeg) {
+            const endRotation = function(actualDeg) {
                 fortuneWheel.css('transition', 'none');
                 fortuneWheel.css('transform', `rotate(${actualDeg}deg)`);
             };
@@ -451,7 +397,7 @@
                 popup.removeClass('show');
             };
 
-            const checkLeftSpins = function () {
+            const checkLeftSpins = function() {
                 let spinsInfo = $('.js-allowed-spins');
                 spinsInfo.text(`Осталось прокруток: ${allowedSpinAmount - spinAmount}`);
 
@@ -460,10 +406,10 @@
                 }
             };
 
-            const sendToTilda = function () {
+            const sendToTilda = function() {
                 let giftsInput = $(`#form${tildaFormId} [name="Подарок"]`);
                 giftsInput.val(prizes.join(', '));
-                console.log(giftsInput)
+                $(`#form${tildaFormId} .t-submit`).click();
             };
 
 
@@ -490,35 +436,20 @@
                 }
             });
 
-            $('.fortune-form__form').on('submit', function (e) {
+            $('.fortune-form__form').on('submit', function(e) {
                 e.preventDefault();
                 sendToTilda();
-                let elems = document.getElementsByClassName("t-submit");
-                elems[0].click();
-                // $('#form506853731 .t-submit').click();
                 blockForm.remove();
                 successBox.show();
             });
 
-            $('.fortune-form__form-input').on('input', function () {
+            $('.fortune-form__form-input').on('input', function() {
                 $(`#form${tildaFormId} [name="Email"]`).val($(this).val());
             });
 
             checkLeftSpins();
-
-            if (Boolean(isPresentWheel)) {
-                // Remove default block
-                console.log("Wheel is present");
-                $('#rec253112433').remove();
-            } else {
-                // Remove fortune
-                console.log("Wheel is not present");
-                $('#rec506853731').remove();
-                $('#rec506628076').remove();
-            }
-
-            // localStorage.removeItem('amount');
         });
     });
 
 </script>
+
