@@ -23,7 +23,7 @@ public class WheelController {
     }
 
     @GetMapping("/{id}")
-    public OrderDTO getWheelOrder(@PathVariable String id) {
+    public String getWheelOrder(@PathVariable String id) {
 
         return wheelService.getCurrentAmountForWheel(id);
     }

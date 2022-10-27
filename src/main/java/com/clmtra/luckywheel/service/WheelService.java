@@ -6,5 +6,5 @@ public interface WheelService {
 
     void addWheelToStorage(OrderDTO orderDTO);
 
-    OrderDTO getCurrentAmountForWheel(String id);
+    String getCurrentAmountForWheel(String id);
 }

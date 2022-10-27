@@ -38,7 +38,7 @@
 
     $(document).ready(function () {
         $('.t-form__submit .t-submit').click(function (event) {
-            const Url = "http://localhost:8080/wheel";
+            const Url = "https://luckeel.herokuapp.com/wheel";
             let sessionId = sessionStorage.getItem("tt_sessionId")
             let amount = $('.t706__cartwin-totalamount .t706__cartwin-prodamount-price').text()
             let formData = JSON.stringify({"session_id": sessionId, "amount": amount})
