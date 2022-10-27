@@ -27,4 +27,9 @@ public class WheelController {
 
         return wheelService.getCurrentAmountForWheel(id);
     }
+
+    @GetMapping
+    public String greeting(){
+        return "Hey!";
+    }
 }
